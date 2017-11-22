@@ -56,7 +56,7 @@ va_end(args);
 }
 
 - (id)performSelectorWithArgs:(SEL)sel onThread:(NSThread *)thr waitUntilDone:(BOOL)wait, ...{
-    INIT_INV(wait, nil);
+    INIT_INV(((bool)wait), nil);
     if (!wait) [inv retainArguments];
     [inv performSelector:@selector(invoke) onThread:thr withObject:nil waitUntilDone:wait];
     return wait ? [NSObject getReturnFromInv:inv withSig:sig] : nil;

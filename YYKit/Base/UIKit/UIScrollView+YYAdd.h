@@ -13,6 +13,18 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@interface UIScrollView (YYExtension)
+@property (readonly, nonatomic) UIEdgeInsets yy_inset;
+@property (assign, nonatomic) CGFloat yy_insetT;
+@property (assign, nonatomic) CGFloat yy_insetB;
+@property (assign, nonatomic) CGFloat yy_insetL;
+@property (assign, nonatomic) CGFloat yy_insetR;
+@property (assign, nonatomic) CGFloat yy_offsetX;
+@property (assign, nonatomic) CGFloat yy_offsetY;
+@property (assign, nonatomic) CGFloat yy_contentW;
+@property (assign, nonatomic) CGFloat yy_contentH;
+@end
+
 /**
  Provides extensions for `UIScrollView`.
  */
