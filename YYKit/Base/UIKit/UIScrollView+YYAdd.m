@@ -158,7 +158,12 @@ YYSYNTH_DUMMY_CLASS(UIScrollView_YYAdd)
 - (void)scrollToBottomAnimated:(BOOL)animated {
     CGPoint off = self.contentOffset;
     off.y = self.yy_contentH - self.bounds.size.height + self.yy_insetB;
-    [self setContentOffset:off animated:animated];
+    if (off.y < self.yy_insetT) {
+        off.y = self.yy_insetT;
+    }
+    if (fabs(off.y - self.contentOffset.y) > 0.5f) {
+        [self setContentOffset:off animated:animated];
+    }
 }
 
 - (void)scrollToLeftAnimated:(BOOL)animated {
