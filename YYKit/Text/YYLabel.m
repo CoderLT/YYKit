@@ -61,6 +61,7 @@ static dispatch_queue_t YYLabelGetReleaseQueue() {
         unsigned int trackingTouch : 1;
         unsigned int swallowTouch : 1;
         unsigned int touchMoved : 1;
+        unsigned int handleLongPressAction : 1;
         
         unsigned int hasTapAction : 1;
         unsigned int hasLongPressAction : 1;
@@ -167,6 +168,7 @@ static dispatch_queue_t YYLabelGetReleaseQueue() {
             rect = textRect;
         }
         _textLongPressAction(self, _innerText, range, rect);
+        _state.handleLongPressAction = YES;
     }
     if (_highlight) {
         YYTextAction longPressAction = _highlight.longPressAction ? _highlight.longPressAction : _highlightLongPressAction;
@@ -549,12 +551,14 @@ static dispatch_queue_t YYLabelGetReleaseQueue() {
         _state.trackingTouch = YES;
         _state.swallowTouch = YES;
         _state.touchMoved = NO;
+        _state.handleLongPressAction = NO;
         [self _startLongPressTimer];
         if (_highlight) [self _showHighlightAnimated:NO];
     } else {
         _state.trackingTouch = NO;
         _state.swallowTouch = NO;
         _state.touchMoved = NO;
+        _state.handleLongPressAction = NO;
     }
     if (!_state.swallowTouch) {
         [super touchesBegan:touches withEvent:event];
@@ -601,7 +605,7 @@ static dispatch_queue_t YYLabelGetReleaseQueue() {
     
     if (_state.trackingTouch) {
         [self _endLongPressTimer];
-        if (!_state.touchMoved && _textTapAction) {
+        if (!_state.touchMoved && !_state.handleLongPressAction && _textTapAction) {
             NSRange range = NSMakeRange(NSNotFound, 0);
             CGRect rect = CGRectNull;
             CGPoint point = [self _convertPointToLayout:_touchBeganPoint];
