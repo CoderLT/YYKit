@@ -209,10 +209,11 @@ static NSString *const kTrashDirectoryName = @"trash";
     sqlite3_stmt *stmt = [self _dbPrepareStmt:sql];
     if (!stmt) return NO;
     
+    int size =  value ? value.length : [self _fileSizeWithName:fileName];
     int timestamp = (int)time(NULL);
     sqlite3_bind_text(stmt, 1, key.UTF8String, -1, NULL);
     sqlite3_bind_text(stmt, 2, fileName.UTF8String, -1, NULL);
-    sqlite3_bind_int(stmt, 3, (int)value.length);
+    sqlite3_bind_int(stmt, 3, size);
     if (fileName.length == 0) {
         sqlite3_bind_blob(stmt, 4, value.bytes, (int)value.length, 0);
     } else {
@@ -596,6 +597,15 @@ static NSString *const kTrashDirectoryName = @"trash";
 
 
 #pragma mark - file
+- (NSString *)filePathWithName:(NSString *)filename {
+    return [_dataPath stringByAppendingPathComponent:filename];
+}
+
+- (NSInteger)_fileSizeWithName:(NSString *)filename {
+    if (filename.length <= 0) return 0;
+    NSString *path = [_dataPath stringByAppendingPathComponent:filename];
+    return [[[NSFileManager defaultManager] attributesOfItemAtPath:path error:nil] fileSize];
+}
 
 - (BOOL)_fileWriteWithName:(NSString *)filename data:(NSData *)data {
     NSString *path = [_dataPath stringByAppendingPathComponent:filename];
@@ -727,13 +737,13 @@ static NSString *const kTrashDirectoryName = @"trash";
 }
 
 - (BOOL)saveItemWithKey:(NSString *)key value:(NSData *)value filename:(NSString *)filename extendedData:(NSData *)extendedData {
-    if (key.length == 0 || value.length == 0) return NO;
+    if (key.length == 0 || (value.length == 0 && [self _fileSizeWithName:filename] == 0)) return NO;
     if (_type == YYKVStorageTypeFile && filename.length == 0) {
         return NO;
     }
     
     if (filename.length) {
-        if (![self _fileWriteWithName:filename data:value]) {
+        if (value && ![self _fileWriteWithName:filename data:value]) {
             return NO;
         }
         if (![self _dbSaveWithKey:key value:value fileName:filename extendedData:extendedData]) {

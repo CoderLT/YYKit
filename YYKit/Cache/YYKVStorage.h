@@ -104,6 +104,13 @@ typedef NS_ENUM(NSUInteger, YYKVStorageType) {
  */
 - (nullable instancetype)initWithPath:(NSString *)path type:(YYKVStorageType)type NS_DESIGNATED_INITIALIZER;
 
+/**
+ Get filePath with a filename.
+ 
+ @param filename a filename.
+ @return filePath, or nil if not exists / error occurs.
+ */
+- (nullable NSString *)filePathWithName:(NSString *)filename;
 
 #pragma mark - Save Items
 ///=============================================================================
@@ -156,7 +163,7 @@ typedef NS_ENUM(NSUInteger, YYKVStorageType) {
  @return Whether succeed.
  */
 - (BOOL)saveItemWithKey:(NSString *)key
-                  value:(NSData *)value
+                  value:(nullable NSData *)value
                filename:(nullable NSString *)filename
            extendedData:(nullable NSData *)extendedData;
 
