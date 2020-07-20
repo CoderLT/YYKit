@@ -21,9 +21,10 @@ Pod::Spec.new do |s|
     sna.source_files = non_arc_files
   end
 
-  s.subspec "NOImage" do |nimg|
+  s.subspec "NoImage" do |nimg|
+    nimg.requires_arc = true
     nimg.source_files   = 'YYKit/**/*.{h,m}'
-    nimg.exclude_files  = 'YYKit/Image/**/*.{h,m}'
+    nimg.exclude_files  = 'YYKit/Image/**/*.{h,m}', 'YYKit/Base/Foundation/NSObject+YYAddForARC.{h,m}', 'YYKit/Base/Foundation/NSThread+YYAdd.{h,m}'
   end
 
   s.libraries = 'z', 'sqlite3'
