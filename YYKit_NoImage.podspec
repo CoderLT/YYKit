@@ -14,7 +14,7 @@ Pod::Spec.new do |s|
   s.source_files = 'YYKit/**/*.{h,m}'
   s.public_header_files = 'YYKit/**/*.{h}'
 
-  s.ios.exclude_files = 'YYKit/Base/Foundation/NSObject+YYAddForARC.{h,m}', 'YYKit/Base/Foundation/NSThread+YYAdd.{h,m}', 'YYKit/Image/YYSpriteSheetImage.m','YYKit/Image/YYSpriteSheetImage.h','YYKit/Image/YYImageCoder.m','YYKit/Image/YYImageCoder.h','YYKit/Image/YYImage.m','YYKit/Image/YYImage.h','YYKit/Image/YYFrameImage.m','YYKit/Image/YYFrameImage.h','YYKit/Image/YYAnimatedImageView.m','YYKit/Image/YYAnimatedImageView.h'
+  s.ios.exclude_files = 'YYKit/Base/Foundation/NSObject+YYAddForARC.{h,m}', 'YYKit/Base/Foundation/NSThread+YYAdd.{h,m}', 'YYKit/Image/*
   s.subspec 'no-arc' do |sna|
     sna.requires_arc = false
     sna.source_files = 'YYKit/Base/Foundation/NSObject+YYAddForARC.{h,m}', 'YYKit/Base/Foundation/NSThread+YYAdd.{h,m}'
