@@ -58,6 +58,7 @@ FOUNDATION_EXPORT const unsigned char YYKitVersionString[];
 #import <YYKit/YYDiskCache.h>
 #import <YYKit/YYKVStorage.h>
 
+#if __has_include(<YYKit/YYImage.h>)
 #import <YYKit/YYImage.h>
 #import <YYKit/YYFrameImage.h>
 #import <YYKit/YYSpriteSheetImage.h>
@@ -70,6 +71,7 @@ FOUNDATION_EXPORT const unsigned char YYKitVersionString[];
 #import <YYKit/UIButton+YYWebImage.h>
 #import <YYKit/MKAnnotationView+YYWebImage.h>
 #import <YYKit/CALayer+YYWebImage.h>
+#endif
 
 #import <YYKit/YYLabel.h>
 #import <YYKit/YYTextView.h>
