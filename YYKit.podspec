@@ -21,6 +21,11 @@ Pod::Spec.new do |s|
     sna.source_files = non_arc_files
   end
 
+  s.subspec "NOImage" do |nimg|
+    nimg.source_files   = 'YYKit/**/*.{h,m}'
+    nimg.exclude_files  = 'YYKit/Image/**/*.{h,m}'
+  end
+
   s.libraries = 'z', 'sqlite3'
   s.frameworks = 'UIKit', 'CoreFoundation', 'CoreText', 'CoreGraphics', 'CoreImage', 'QuartzCore', 'ImageIO', 'AssetsLibrary', 'Accelerate', 'MobileCoreServices', 'SystemConfiguration'
   s.ios.vendored_frameworks = 'Vendor/WebP.framework'
